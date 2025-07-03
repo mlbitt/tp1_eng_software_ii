@@ -1,11 +1,19 @@
 import unittest
+import os
 from todo import TodoList
 
 class TestTodoList(unittest.TestCase):
     def setUp(self):
-        self.todo = TodoList()
+        self.test_filename = "test_todo_tasks.json"
+        if os.path.exists(self.test_filename):
+            os.remove(self.test_filename)
+        self.todo = TodoList(filename=self.test_filename)
         self.task1 = self.todo.add_task("Estudar Python")
         self.task2 = self.todo.add_task("Fazer exercícios")
+
+    def tearDown(self):
+        if os.path.exists(self.test_filename):
+            os.remove(self.test_filename)
 
     # Testes básicos
     def test_add_task(self):
